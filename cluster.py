@@ -68,9 +68,9 @@ def batched_kl(pm, pv, qm, qv, bs=1000):
     for i in range(0, pm.shape[0], bs):
         for j in range(0, qm.shape[0], bs):
             si = i
-            ei = max(pm.shape[0], si+bs)
+            ei = min(pm.shape[0], si+bs)
             sj = j
-            ej = max(qm.shape[0], sj+bs)
+            ej = min(qm.shape[0], sj+bs)
             logging.info('Batch i: %s->%s j: %s->%s', si, ei, sj, ej)
             res[si:ei, sj:ej] = kl(pm[si:ei], pv[si:ei], qm[sj:ej], qv[sj:ej])
     return res
