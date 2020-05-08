@@ -102,6 +102,7 @@ def main(argv):
     graph = load_graph(FLAGS.input)
     labels = np.loadtxt(FLAGS.labels).astype(np.int32)
     mu, sigma = cluster(graph,FLAGS.dim)
+    logging.info('mu.shape %s', str(mu.shape))
     p, sorted_norms = predict(mu, sigma)
     tree_from_parent(p, labels[sorted_norms], FLAGS.output)
 
