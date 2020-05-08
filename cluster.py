@@ -73,7 +73,7 @@ def batched_kl(pm, pv, qm, qv, bs=1000):
             ej = min(qm.shape[0], sj+bs)
             logging.info('Batch i: %s->%s j: %s->%s', si, ei, sj, ej)
             res[si:ei, sj:ej] = kl(pm[si:ei], pv[si:ei], qm[sj:ej], qv[sj:ej])
-    return res
+    return res.T
 
 def predict(mu, sigma):
     r = batched_kl(mu, sigma, mu, sigma)
