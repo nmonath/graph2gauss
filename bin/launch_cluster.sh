@@ -19,7 +19,7 @@ export OPENBLAS_NUM_THREADS=$threads
 export OMP_NUM_THREADS=$threads
 
 dataset=`basename $input`
-model_name="g2g"
+model_name="g2g-$dim"
 job_name="$model_name-$dataset-$TIME"
 log_dir=logs/$model_name/$dataset/$TIME
 log_base=$log_dir/$job_name
