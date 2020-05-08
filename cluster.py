@@ -63,7 +63,6 @@ def kl(pm, pv, qm, qv):
     return res.T
 
 def predict(mu, sigma):
-    kls = None
     r = kl(mu, sigma, mu, sigma)
     np.fill_diagonal(r, np.inf)
     var_norms = np.linalg.norm(sigma, axis=1)
