@@ -7,10 +7,10 @@ output=$2
 labels=$3
 dim=$4
 
-partition=${1:-gpu}
-mem=${2:-12000}
-threads=${3:-4}
-gpus=${4:-1}
+partition=${5:-gpu}
+mem=${6:-12000}
+threads=${7:-4}
+gpus=${8:-1}
 
 TIME=`(date +%Y-%m-%d-%H-%M-%S)`
 
@@ -23,7 +23,10 @@ model_name="g2g"
 job_name="$model_name-$dataset-$TIME"
 log_dir=logs/$model_name/$dataset/$TIME
 log_base=$log_dir/$job_name
+out_dir=exp_out/$model_name/$dataset/$TIME
 mkdir -p $log_dir
+mkdir -p $out_dir
+
 
 sbatch -J $job_name \
             -e $log_base.err \
@@ -35,4 +38,4 @@ sbatch -J $job_name \
             --nodes=1 \
             --mem=$mem \
             --time=0-04:00 \
-            bin/run_cluster.sh $input $output $labels $dim
+            bin/run_cluster.sh $input $out_dir/tree.tsv $labels $dim
