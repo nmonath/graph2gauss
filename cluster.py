@@ -63,8 +63,20 @@ def kl(pm, pv, qm, qv):
     res = 0.5 * (t1 + t2 + t3sum - N)
     return res.T
 
+def batched_kl(pm, pv, qm, qv, bs=1000):
+    res = np.zeros((pm.shape[0], qm.shape[0]))
+    for i in range(0, pm.shape[0], bs):
+        for j in range(0, qm.shape[0], bs):
+            si = i
+            ei = max(pm.shape[0], si+bs)
+            sj = j
+            ej = max(qm.shape[0], sj+bs)
+            logging.info('Batch i: %s->%s j: %s->%s', si, ei, sj, ej)
+            res[si:ei, sj:ej] = kl(pm[si:ei], pv[si:ei], qm[sj:ej], qv[sj:ej])
+    return res
+
 def predict(mu, sigma):
-    r = kl(mu, sigma, mu, sigma)
+    r = batched_kl(mu, sigma, mu, sigma)
     np.fill_diagonal(r, np.inf)
     var_norms = np.linalg.norm(sigma, axis=1)
     sorted_norms = np.argsort(var_norms)
