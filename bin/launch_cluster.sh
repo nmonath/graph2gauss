@@ -38,4 +38,4 @@ sbatch -J $job_name \
             --nodes=1 \
             --mem=$mem \
             --time=0-04:00 \
-            bin/run_cluster.sh $input $out_dir/tree.tsv $labels $dim
+            bin/run_cluster.sh $input $out_dir/tree.tsv $labels $dim $model_name
