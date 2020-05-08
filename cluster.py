@@ -15,12 +15,13 @@ flags.DEFINE_string('input', '', 'data path')
 flags.DEFINE_string('labels', '', 'data path')
 flags.DEFINE_string('output', '', 'data path')
 flags.DEFINE_integer('dim', 2, 'data path')
+flags.DEFINE_integer('tol', 50, 'data path')
 
 logging.set_verbosity(logging.INFO)
 
 
 def cluster(nn_graph, dim=2):
-    g2g = Graph2Gauss(A=nn_graph, X=nn_graph + sp.eye(nn_graph.shape[0]), L=dim, verbose=True, p_val=0.0, p_test=0.00)
+    g2g = Graph2Gauss(A=nn_graph, X=nn_graph + sp.eye(nn_graph.shape[0]), tolerance=FLAGS.tol, L=dim, verbose=True, p_val=0.0, p_test=0.00)
     sess = g2g.train()
     mu, sigma = sess.run([g2g.mu, g2g.sigma])
     return mu,sigma

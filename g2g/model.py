@@ -1,7 +1,9 @@
 import numpy as np
 import tensorflow as tf
 from .utils import *
+from absl import logging
 
+logging.set_verbosity(logging.INFO)
 
 class Graph2Gauss:
     """
@@ -276,12 +278,12 @@ class Graph2Gauss:
                 early_stopping_score = val_auc + val_ap
 
                 if self.verbose and epoch % 50 == 0:
-                    print('epoch: {:3d}, loss: {:.4f}, val_auc: {:.4f}, val_ap: {:.4f}'.format(epoch, loss, val_auc, val_ap))
+                    logging.info('epoch: {:3d}, loss: {:.4f}, val_auc: {:.4f}, val_ap: {:.4f}'.format(epoch, loss, val_auc, val_ap))
 
             else:
                 early_stopping_score = -loss
                 if self.verbose and epoch % 50 == 0:
-                    print('epoch: {:3d}, loss: {:.4f}'.format(epoch, loss))
+                    logging.info('epoch: {:3d}, loss: {:.4f}'.format(epoch, loss))
 
             if early_stopping_score > early_stopping_score_max:
                 early_stopping_score_max = early_stopping_score
